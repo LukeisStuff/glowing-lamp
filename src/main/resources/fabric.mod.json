@@ -1,11 +1,11 @@
 {
 	"schemaVersion": 1,
-	"id": "examplemod",
+	"id": "glowinglamp",
 	"version": "${version}",
-	"name": "Example Mod",
-	"description": "This mod aims to help new BTA modders.",
+	"name": "Glowing Lamps",
+	"description": "Makes lamps glow like glowstone.",
 	"authors": [
-		"Turnip Labs"
+		"LukeisStuff"
 	],
 	"contact": {
 		"homepage": "",
@@ -16,20 +16,23 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"turniplabs.examplemod.ExampleMod"
+			"luke.glowinglamp.GlowingLampMod"
 		],
 		"beforeGameStart": [
-			"turniplabs.examplemod.ExampleMod"
+			"luke.glowinglamp.GlowingLampMod"
 		],
 		"afterGameStart": [
-			"turniplabs.examplemod.ExampleMod"
+			"luke.glowinglamp.GlowingLampMod"
 		],
-		"recipesReady": [
-			"turniplabs.examplemod.ExampleMod"
+		"beforeClientStart": [
+			"luke.glowinglamp.GlowingLampMod"
+		],
+		"afterClientStart": [
+			"luke.glowinglamp.GlowingLampMod"
 		]
 	},
 	"mixins": [
-		"examplemod.mixins.json"
+		"glowinglamp.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=${fabricloader}",

@@ -3,16 +3,16 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
-    id("fabric-loom")
-    java
+	id("fabric-loom")
+	java
 }
 
 val lwjglVersion = providers.gradleProperty("lwjgl_version")
 val lwjglNatives = when {
-    Os.isFamily(Os.FAMILY_UNIX) && !Os.isFamily(Os.FAMILY_MAC) -> "natives-linux"
-    Os.isFamily(Os.FAMILY_WINDOWS) -> "natives-windows"
-    Os.isFamily(Os.FAMILY_MAC) -> "natives-macos${if (Os.isArch("aarch64")) "-arm64" else ""}"
-    else -> error("Unsupported OS")
+	Os.isFamily(Os.FAMILY_UNIX) && !Os.isFamily(Os.FAMILY_MAC) -> "natives-linux"
+	Os.isFamily(Os.FAMILY_WINDOWS) -> "natives-windows"
+	Os.isFamily(Os.FAMILY_MAC) -> "natives-macos${if (Os.isArch("aarch64")) "-arm64" else ""}"
+	else -> error("Unsupported OS")
 }
 
 val modVersion = providers.gradleProperty("mod_version")
@@ -40,43 +40,43 @@ base.archivesName = modName.get()
 version = modVersion.get()
 
 loom {
-    noIntermediateMappings()
-    customMinecraftMetadata.set("https://downloads.betterthanadventure.net/bta-client/${btaChannel.get()}/v${btaVersion.get()}/manifest.json")
+	noIntermediateMappings()
+	customMinecraftMetadata.set("https://downloads.betterthanadventure.net/bta-client/${btaChannel.get()}/v${btaVersion.get()}/manifest.json")
 }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 	maven("https://jitpack.io")
-    maven("https://maven.glass-launcher.net/babric") { name = "Babric" }
-    maven("https://maven.fabricmc.net/") { name = "Fabric" }
-    maven("https://maven.thesignalumproject.net/infrastructure") { name = "SignalumMavenInfrastructure" }
-    maven("https://maven.thesignalumproject.net/releases") { name = "SignalumMavenReleases" }
-    ivy("https://github.com/Better-than-Adventure") {
-        patternLayout { artifact("[organisation]/releases/download/v[revision]/[module].jar") }
-        metadataSources { artifact() }
-    }
-    ivy("https://downloads.betterthanadventure.net/bta-client/${btaChannel.get()}/") {
-        patternLayout { artifact("/v[revision]/client.jar") }
-        metadataSources { artifact() }
-    }
-    ivy("https://downloads.betterthanadventure.net/bta-server/${btaChannel.get()}/") {
-        patternLayout { artifact("/v[revision]/server.jar") }
-        metadataSources { artifact() }
-    }
-    ivy("https://piston-data.mojang.com") {
-        patternLayout { artifact("v1/[organisation]/[revision]/[module].jar") }
-        metadataSources { artifact() }
-    }
+	maven("https://maven.glass-launcher.net/babric") { name = "Babric" }
+	maven("https://maven.fabricmc.net/") { name = "Fabric" }
+	maven("https://maven.thesignalumproject.net/infrastructure") { name = "SignalumMavenInfrastructure" }
+	maven("https://maven.thesignalumproject.net/releases") { name = "SignalumMavenReleases" }
+	ivy("https://github.com/Better-than-Adventure") {
+		patternLayout { artifact("[organisation]/releases/download/v[revision]/[module].jar") }
+		metadataSources { artifact() }
+	}
+	ivy("https://downloads.betterthanadventure.net/bta-client/${btaChannel.get()}/") {
+		patternLayout { artifact("/v[revision]/client.jar") }
+		metadataSources { artifact() }
+	}
+	ivy("https://downloads.betterthanadventure.net/bta-server/${btaChannel.get()}/") {
+		patternLayout { artifact("/v[revision]/server.jar") }
+		metadataSources { artifact() }
+	}
+	ivy("https://piston-data.mojang.com") {
+		patternLayout { artifact("v1/[organisation]/[revision]/[module].jar") }
+		metadataSources { artifact() }
+	}
 }
 
 dependencies {
-    minecraft("::${btaVersion.get()}")
-    mappings(loom.layered {})
+	minecraft("::${btaVersion.get()}")
+	mappings(loom.layered {})
 
 	// https://piston-data.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar
-    modRuntimeOnly("objects:client:43db9b498cb67058d2e12d394e6507722e71bb45")
-    // If you do not need Halplibe you can comment out or delete this line.
-    modImplementation("turniplabs:halplibe:${halplibeVersion.get()}")
+	modRuntimeOnly("objects:client:43db9b498cb67058d2e12d394e6507722e71bb45")
+	// If you do not need Halplibe you can comment out or delete this line.
+	modImplementation("turniplabs:halplibe:${halplibeVersion.get()}")
 	modImplementation("turniplabs:modmenu-bta:${modMenuVersion.get()}")
 	modImplementation("net.fabricmc:fabric-loader:${loaderVersion.get()}")
 	modImplementation("com.github.Better-than-Adventure:legacy-lwjgl3:1.0.5")
@@ -128,10 +128,12 @@ tasks {
 				logger.lifecycle("Using LICENSE from project root: ${rootLicense.asFile}")
 				rootLicense
 			}
+
 			parentLicense.asFile.exists() -> {
 				logger.lifecycle("Using LICENSE from parent directory: ${parentLicense.asFile}")
 				parentLicense
 			}
+
 			else -> {
 				logger.warn("No LICENSE file found in project or parent directory.")
 				null
