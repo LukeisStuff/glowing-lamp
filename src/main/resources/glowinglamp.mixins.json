@@ -6,7 +6,8 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "BlockLogicLampMixin"
+    "BlockLogicLampMixin",
+    "BlocksMixin"
   ],
   "client": []
 }

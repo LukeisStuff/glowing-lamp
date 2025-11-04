@@ -18,6 +18,7 @@ public class BlockLogicLampMixin extends BlockLogic {
 		super(block, material);
 	}
 
+	@Override
 	public float getAmbientOcclusionStrength(WorldSource blockAccess, int x, int y, int z) {
 		if (this.isActive) {
 			return 0.0F;
