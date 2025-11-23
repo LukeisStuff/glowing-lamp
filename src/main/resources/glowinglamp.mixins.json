@@ -1,5 +1,8 @@
 {
   "required": true,
+  "mixinextras": {
+    "minVersion": "0.5.0"
+  },
   "package": "luke.glowinglamp.mixin",
   "compatibilityLevel": "JAVA_${java}",
   "injectors": {
@@ -7,7 +10,10 @@
   },
   "mixins": [
     "BlockLogicLampMixin",
-    "BlocksMixin"
+    "BlocksMixin",
+    "ContainersFixStackSizeMixin",
+    "ItemStackLimitMixin",
+    "SlotStackSizeMixin"
   ],
   "client": [
     "ItemModelStandardMixin"

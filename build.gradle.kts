@@ -23,6 +23,7 @@ val btaChannel = providers.gradleProperty("bta_channel")
 val btaVersion = providers.gradleProperty("bta_version")
 
 val loaderVersion = providers.gradleProperty("loader_version")
+val legacyLwjglVersion = providers.gradleProperty("legacy_lwjgl_version")
 
 val halplibeVersion = providers.gradleProperty("halplibe_version")
 val modMenuVersion = providers.gradleProperty("mod_menu_version")
@@ -34,6 +35,7 @@ val gsonVersion = providers.gradleProperty("gson_version")
 val commonsLang3Version = providers.gradleProperty("commons_lang3_version")
 
 val javaVersion = providers.gradleProperty("java_version")
+val gradleJavaVersion = providers.gradleProperty("gradle_java_version")
 
 group = modGroup.get()
 base.archivesName = modName.get()
@@ -47,7 +49,6 @@ loom {
 repositories {
 	mavenCentral()
 	maven("https://jitpack.io")
-	maven("https://maven.glass-launcher.net/babric") { name = "Babric" }
 	maven("https://maven.fabricmc.net/") { name = "Fabric" }
 	maven("https://maven.thesignalumproject.net/infrastructure") { name = "SignalumMavenInfrastructure" }
 	maven("https://maven.thesignalumproject.net/releases") { name = "SignalumMavenReleases" }
@@ -67,6 +68,10 @@ repositories {
 		patternLayout { artifact("v1/[organisation]/[revision]/[module].jar") }
 		metadataSources { artifact() }
 	}
+	ivy("https://github.com/") {
+		patternLayout { artifact("v1/[organisation]/[revision]/[module].jar") }
+		metadataSources { artifact() }
+	}
 }
 
 dependencies {
@@ -74,12 +79,11 @@ dependencies {
 	mappings(loom.layered {})
 
 	// https://piston-data.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar
-	modRuntimeOnly("objects:client:43db9b498cb67058d2e12d394e6507722e71bb45")
-	// If you do not need Halplibe you can comment out or delete this line.
+	modImplementation("objects:client:43db9b498cb67058d2e12d394e6507722e71bb45")
 	modImplementation("turniplabs:halplibe:${halplibeVersion.get()}")
 	modImplementation("turniplabs:modmenu-bta:${modMenuVersion.get()}")
 	modImplementation("net.fabricmc:fabric-loader:${loaderVersion.get()}")
-	modImplementation("com.github.Better-than-Adventure:legacy-lwjgl3:1.0.5")
+	modImplementation("com.github.Better-than-Adventure:legacy-lwjgl3:${legacyLwjglVersion.get()}")
 
 	implementation(platform("org.lwjgl:lwjgl-bom:${lwjglVersion.get()}"))
 	implementation("org.slf4j:slf4j-api:${slf4jApiVersion.get()}")
@@ -117,6 +121,10 @@ tasks {
 		targetCompatibility = javaVersion.get()
 		if (javaVersion.get().toInt() > 8) options.release = javaVersion.get().toInt()
 	}
+	named<UpdateDaemonJvm>("updateDaemonJvm") {
+		languageVersion = JavaLanguageVersion.of(gradleJavaVersion.get().toInt())
+		vendor = JvmVendorSpec.ADOPTIUM
+	}
 	withType<JavaExec>().configureEach { defaultCharacterEncoding = "UTF-8" }
 	withType<Javadoc>().configureEach { options.encoding = "UTF-8" }
 	withType<Test>().configureEach { defaultCharacterEncoding = "UTF-8" }
@@ -151,12 +159,14 @@ tasks {
 		val stringJavaVersion = javaVersion.get()
 		val stringHalplibeVersion = halplibeVersion.get()
 		val stringModMenuVersion = modMenuVersion.get()
+
 		inputs.property("modVersion", stringModVersion)
 		inputs.property("loaderVersion", stringLoaderVersion)
 		inputs.property("javaVersion", stringJavaVersion)
-		inputs.property("HalplibeVersion", stringHalplibeVersion)
+		inputs.property("halplibeVersion", stringHalplibeVersion)
 		inputs.property("modMenuVersion", stringModMenuVersion)
-		filesMatching("fabric.mod.json") {
+
+        filesMatching("fabric.mod.json") {
 			expand(
 				mapOf(
 					"version" to stringModVersion,
@@ -164,13 +174,16 @@ tasks {
 					"halplibe" to stringHalplibeVersion,
 					"java" to stringJavaVersion,
 					"modmenu" to stringModMenuVersion
-				)
+                )
 			)
 		}
-		filesMatching("*.mixins.json") { expand(mapOf("java" to stringJavaVersion)) }
+		filesMatching("**/*.mixins.json") { expand(mapOf("java" to stringJavaVersion)) }
 	}
 	java {
-		toolchain.languageVersion = JavaLanguageVersion.of(javaVersion.get())
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(javaVersion.get())
+			vendor = JvmVendorSpec.ADOPTIUM
+		}
 		sourceCompatibility = JavaVersion.toVersion(javaVersion.get().toInt())
 		targetCompatibility = JavaVersion.toVersion(javaVersion.get().toInt())
 		withSourcesJar()

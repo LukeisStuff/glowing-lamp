@@ -34,13 +34,13 @@
 	"mixins": [
 		"glowinglamp.mixins.json"
 	],
-	"depends": {
-		"fabricloader": ">=${fabricloader}",
-		"halplibe": ">=${halplibe}",
-		"minecraft": "*",
-		"java": ">=${java}"
-	},
-	"suggests": {
-		"modmenu": ">=${modmenu}"
-	}
+  "depends": {
+    "fabricloader": ">=${fabricloader}",
+    "halplibe": ">=${halplibe}",
+    "minecraft": "*",
+    "java": ">=${java}"
+  },
+  "suggests": {
+    "modmenu": ">=${modmenu}"
+  }
 }
