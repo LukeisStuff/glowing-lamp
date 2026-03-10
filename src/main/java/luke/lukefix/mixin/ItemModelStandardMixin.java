@@ -1,4 +1,4 @@
-package luke.glowinglamp.mixin;
+package luke.lukefix.mixin;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

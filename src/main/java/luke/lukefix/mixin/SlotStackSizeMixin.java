@@ -1,4 +1,4 @@
-package luke.glowinglamp.mixin;
+package luke.lukefix.mixin;
 
 import net.minecraft.core.player.inventory.slot.SlotCreative;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,4 +1,4 @@
-package luke.glowinglamp.mixin;
+package luke.lukefix.mixin;
 
 import net.minecraft.core.block.entity.*;
 import net.minecraft.core.entity.vehicle.EntityMinecart;

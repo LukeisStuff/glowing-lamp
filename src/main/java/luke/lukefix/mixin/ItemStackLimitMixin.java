@@ -1,4 +1,4 @@
-package luke.glowinglamp.mixin;
+package luke.lukefix.mixin;
 
 import net.minecraft.core.block.Blocks;
 import net.minecraft.core.item.Item;

@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "glowinglamp",
+	"id": "lukefix",
 	"version": "${version}",
-	"name": "Glowing Lamps",
-	"description": "Makes lamps glow like glowstone.",
+	"name": "Luke's Fixes",
+	"description": "Patch mod to fix some minor issues with BTA.",
 	"authors": [
 		"LukeisStuff"
 	],
@@ -16,19 +16,19 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"luke.glowinglamp.GlowingLampMod"
+      "luke.lukefix.LukeFixMod"
 		],
 		"beforeGameStart": [
-			"luke.glowinglamp.GlowingLampMod"
+      "luke.lukefix.LukeFixMod"
 		],
 		"afterGameStart": [
-			"luke.glowinglamp.GlowingLampMod"
+      "luke.lukefix.LukeFixMod"
 		],
 		"beforeClientStart": [
-			"luke.glowinglamp.GlowingLampMod"
+      "luke.lukefix.LukeFixMod"
 		],
 		"afterClientStart": [
-			"luke.glowinglamp.GlowingLampMod"
+      "luke.lukefix.LukeFixMod"
 		]
 	},
 	"mixins": [
