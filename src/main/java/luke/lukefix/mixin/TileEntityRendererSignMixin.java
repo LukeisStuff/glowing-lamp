@@ -10,11 +10,11 @@ import net.minecraft.client.render.tileentity.TileEntityRendererSign;
 import net.minecraft.core.block.entity.TileEntitySign;
 import net.minecraft.core.enums.EnumSignPicture;
 import net.minecraft.core.util.helper.Color;
-import net.minecraft.core.util.helper.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
@@ -44,22 +44,34 @@ public abstract class TileEntityRendererSignMixin {
             LightmapHelper.setLightmapCoord(LightmapHelper.getLightmapCoord(sky, block));
         }
 
-        EnumSignPicture picture = tileEntity.getPicture();
-        int pictureColor;
+        float brightness = (!LightmapHelper.isLightmapEnabled() && !mc.isFullbrightEnabled()) ? mc.currentWorld.getLightBrightness(tileEntity.x, tileEntity.y, tileEntity.z) : 1.0F;
 
-        if (picture == EnumSignPicture.BARRICADE) {
-            pictureColor = 0xFFFFFFFF;
-            GL11.glColor3f(1.0F, 1.0F, 1.0F);
-        } else {
-            float factor = tileEntity.isGlowing() ? 2.0F : 1.0F;
-            int r = MathHelper.clamp((int) (Color.redFromInt(colorSign) * factor), 0, 255);
-            int g = MathHelper.clamp((int) (Color.greenFromInt(colorSign) * factor), 0, 255);
-            int b = MathHelper.clamp((int) (Color.blueFromInt(colorSign) * factor), 0, 255);
-            int a = Color.alphaFromInt(colorSign);
-
-            pictureColor = Color.intToIntARGB(a, r, g, b);
+        if (tileEntity.isGlowing()) {
+            brightness = 1.0F;
         }
 
+        int pictureColor = getPictureColor(colorSign, tileEntity, brightness);
+
         drawTexturedModalRect(width, height, pictureColor, coordinate);
+    }
+
+    @Unique
+    private static int getPictureColor(int colorSign, TileEntitySign tileEntity, float brightness) {
+        EnumSignPicture picture = tileEntity.getPicture();
+
+        int r, g, b, a = Color.alphaFromInt(colorSign);
+
+        if (picture == EnumSignPicture.BARRICADE) {
+            int gray = (int) (255 * brightness);
+            r = gray;
+            g = gray;
+            b = gray;
+        } else {
+            r = (int) (Color.redFromInt(colorSign) * brightness);
+            g = (int) (Color.greenFromInt(colorSign) * brightness);
+            b = (int) (Color.blueFromInt(colorSign) * brightness);
+        }
+
+        return Color.intToIntARGB(a, r, g, b);
     }
 }
