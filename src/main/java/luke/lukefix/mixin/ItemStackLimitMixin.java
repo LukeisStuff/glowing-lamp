@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ItemStackLimitMixin {
 
     @Inject(method = "getItemStackLimit(Lnet/minecraft/core/item/ItemStack;)I",
-		at = @At("HEAD"),
-            cancellable = true, remap = false)
+        at = @At("HEAD"),
+        cancellable = true, remap = false)
     private void newItemStackLimit(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
         int id = stack.itemID;
         if (id >= 0 && id < Blocks.blocksList.length && Blocks.blocksList[id] != null) {

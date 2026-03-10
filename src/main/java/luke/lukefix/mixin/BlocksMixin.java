@@ -13,24 +13,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = Blocks.class, remap = false)
 public class BlocksMixin {
 
-	@Final
-	@Shadow
-	public static int[] lightEmission;
+    @Final
+    @Shadow
+    public static int[] lightEmission;
 
-	@Shadow
-	@Final
-	public static Block<BlockLogicLamp> LAMP_ACTIVE;
+    @Shadow
+    @Final
+    public static Block<BlockLogicLamp> LAMP_ACTIVE;
 
-	@Shadow
-	@Final
-	public static Block<BlockLogicLamp> LAMP_INVERTED_ACTIVE;
+    @Shadow
+    @Final
+    public static Block<BlockLogicLamp> LAMP_INVERTED_ACTIVE;
 
-	@Inject(method = "init", at = @At("TAIL"))
-	private static void adjustLampEmission(CallbackInfo ci) {
-		LAMP_ACTIVE.emission = 15;
-		lightEmission[LAMP_ACTIVE.id()] = 15;
+    @Inject(method = "init", at = @At("TAIL"))
+    private static void adjustLampEmission(CallbackInfo ci) {
+        LAMP_ACTIVE.emission = 15;
+        lightEmission[LAMP_ACTIVE.id()] = 15;
 
-		LAMP_INVERTED_ACTIVE.emission = 15;
-		lightEmission[LAMP_INVERTED_ACTIVE.id()] = 15;
-	}
+        LAMP_INVERTED_ACTIVE.emission = 15;
+        lightEmission[LAMP_INVERTED_ACTIVE.id()] = 15;
+    }
 }

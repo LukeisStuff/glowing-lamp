@@ -9,10 +9,12 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "BlockLogicLampMixin",
-    "MenuInventoryCreativeMixin"
+    "BlockLogicLampMixin"
   ],
   "client": [
+    "BlockModelEmptyMixin",
+    "FixChatDisconnectMixin",
+    "FixScreenSignCrashMixin",
     "ItemModelStandardMixin",
     "TileEntityRendererSignMixin"
   ]

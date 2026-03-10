@@ -14,23 +14,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Pseudo
 @Mixin(value = {
-	ContainerCompound.class,
-	ContainerCrafting.class,
-	ContainerInventory.class,
-	ContainerSimple.class,
-	EntityMinecart.class,
-	TileEntityActivator.class,
-	TileEntityChest.class,
-	TileEntityDispenser.class,
-	TileEntityFurnace.class,
-	TileEntityTrommel.class},
-	remap = false)
+    ContainerCompound.class,
+    ContainerCrafting.class,
+    ContainerInventory.class,
+    ContainerSimple.class,
+    EntityMinecart.class,
+    TileEntityActivator.class,
+    TileEntityChest.class,
+    TileEntityDispenser.class,
+    TileEntityFurnace.class,
+    TileEntityTrommel.class},
+    remap = false)
 public abstract class ContainersFixStackSizeMixin {
 
-	@Inject(method = "getMaxStackSize",
-		at = @At("HEAD"),
-		cancellable = true)
-	private void overrideMaxStackSize(CallbackInfoReturnable<Integer> cir) {
-		cir.setReturnValue(128);
-	}
+    @Inject(method = "getMaxStackSize",
+        at = @At("HEAD"),
+        cancellable = true)
+    private void overrideMaxStackSize(CallbackInfoReturnable<Integer> cir) {
+        cir.setReturnValue(128);
+    }
 }

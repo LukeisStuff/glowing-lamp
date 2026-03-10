@@ -30,7 +30,7 @@
 		"afterClientStart": [
       "luke.lukefix.LukeFixMod"
 		]
-	},
+  },
 	"mixins": [
 		"glowinglamp.mixins.json"
 	],

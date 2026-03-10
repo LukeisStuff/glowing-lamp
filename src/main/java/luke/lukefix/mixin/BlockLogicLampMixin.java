@@ -11,18 +11,18 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(value = BlockLogicLamp.class, remap = false)
 public class BlockLogicLampMixin extends BlockLogic {
 
-	@Shadow
-	public boolean isActive;
+    @Shadow
+    public boolean isActive;
 
-	public BlockLogicLampMixin(Block<?> block, Material material) {
-		super(block, material);
-	}
+    public BlockLogicLampMixin(Block<?> block, Material material) {
+        super(block, material);
+    }
 
-	@Override
-	public float getAmbientOcclusionStrength(WorldSource blockAccess, int x, int y, int z) {
-		if (this.isActive) {
-			return 0.0F;
-		}
-		return super.getAmbientOcclusionStrength(blockAccess, x, y, z);
-	}
+    @Override
+    public float getAmbientOcclusionStrength(WorldSource blockAccess, int x, int y, int z) {
+        if (this.isActive) {
+            return 0.0F;
+        }
+        return super.getAmbientOcclusionStrength(blockAccess, x, y, z);
+    }
 }
