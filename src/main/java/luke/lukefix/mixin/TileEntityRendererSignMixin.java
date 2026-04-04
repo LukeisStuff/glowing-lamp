@@ -31,7 +31,7 @@ public abstract class TileEntityRendererSignMixin {
     }
 
     @Redirect(method = "doRender*", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/tileentity/TileEntityRendererSign;drawTexturedModalRect(DDILnet/minecraft/client/render/texture/stitcher/IconCoordinate;)V"))
-    private void fixPictureLighting(double width, double height, int colorSign, IconCoordinate coordinate, Tessellator t, TileEntitySign tileEntity, double x, double y, double z, float partialTick) {
+    private void fixPictureLighting(double width, double height, int color, IconCoordinate coordinate, Tessellator t, TileEntitySign tileEntity, double x, double y, double z, float partialTick) {
         if (tileEntity.isGlowing()) {
             if (LightmapHelper.isLightmapEnabled()) {
                 LightmapHelper.setLightmapCoord(LightmapHelper.getLightmapCoord(15, 15));
@@ -50,7 +50,7 @@ public abstract class TileEntityRendererSignMixin {
             brightness = 1.0F;
         }
 
-        int pictureColor = getPictureColor(colorSign, tileEntity, brightness);
+        int pictureColor = getPictureColor(color, tileEntity, brightness);
 
         drawTexturedModalRect(width, height, pictureColor, coordinate);
     }

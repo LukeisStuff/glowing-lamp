@@ -29,7 +29,10 @@
 		],
 		"afterClientStart": [
       "luke.lukefix.LukeFixMod"
-		]
+		],
+    "initModels": [
+      "luke.lukefix.LukeFixMod"
+    ]
   },
 	"mixins": [
 		"glowinglamp.mixins.json"

@@ -10,13 +10,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(value = MenuInventoryCreative.class, remap = false)
 public abstract class MenuInventoryCreativeMixin {
 
     @Shadow
-    public static List<ItemStack> creativeItems;
+    public static final List<ItemStack> creativeItems = new ArrayList<>();
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void rebuildCreativeList(CallbackInfo ci) {
